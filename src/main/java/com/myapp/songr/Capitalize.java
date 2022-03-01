@@ -6,9 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-public class HelloWorld {
-    @GetMapping("hello")
-    public String helloWorld(){
-        return "helloWorld.html";
+public class Capitalize {
+    @GetMapping("capitalize/{upperCase}")
+    public String capitalize(Model m, @PathVariable String upperCase){
+        m.addAttribute("upperCase", upperCase.toUpperCase());
+        return "capitalize.html";
     }
 }
