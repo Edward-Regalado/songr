@@ -1,52 +1,57 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/main.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <title>Album</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Albums</title>
 </head>
+<body>
+<h1>Albums</h1>
 
-<div class="container">
-    <h1>Songr</h1>
-</div>
-<header>
-    <nav class="navbar navbar-expand-lg fixed-top ">
-        <a class="navbar-brand" href="/">Home</a>
-        <button class="navbar-toggler" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav mr-4">
-                <li class="nav-item">
-                    <a class="nav-link" href="/album">Albums</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+<form action="/album" method="post">
+    <fieldset>
+        <legend>Create a new Album</legend>
+        <label for="title">Title</label>
+        <input type="text" name="title">
+        <lable for="artist">Artist</lable>
+        <input type="text" name="artist">
+        <label for="songCount">Song Count</label>
+        <input type="number" name="songCount">
+        <label for="length">Length(seconds)</label>
+        <input type="number" name="length">
+        <label for="imageUrl">URL Link to Album Cover</label>
+        <input type="text" name="imageUrl">
+        <input type="submit" value="Add Album">
+    </fieldset>
+</form>
 
-<div class="container">
-    <div class="d-flex justify-content-around">
-        <div th:each="album : ${albums}" class="card" style="width: 15 rem;">
-            <img class="img-fluid" th:src="${album.imageUrl}"/>
-            <div class="card-body">
-                <h5 class="card-title" th:text="'Title: ' + ${album.title}"></h5>
-                <p class="card-text" th:text="'Artist: ' + ${album.artist}"></p>
-                <p class="card-text" th:text="'Tracks: ' + ${album.songCount}"></p>
-                <p class="card-text" th:text="'Track length: ' + ${album.length} + ' seconds'"></p>
-                <a href="#" class="btn btn-primary">add</a>
-                <a href="#" class="btn btn-primary">delete</a>
-            </div>
-        </div>
-    </div>
-</div>
+<ul th:each="album : ${albums}">
+    <img th:src="${album.imageUrl}"/>
+    <li th:text="'Album title: ' + ${album.title}"></li>
+    <li th:text="'Artist: ' + ${album.artist}"></li>
+    <li th:text="'Song Count: ' + ${album.songCount}"></li>
+    <li th:text="'Album Length(seconds): ' + ${album.length}"></li>
+    <div>Tracklist:</div>
+    <ul th:each="song: ${album.trackList}">
+        <li th:text="${song.trackNumber} + '. ' + ${song.title} + ' (' + ${song.length})'" ></li>
+    </ul>
 
-<footer>
-    Footer
-</footer>
+    <form action="/album" method="post">
+        <fieldset>
+            <legend>Add song to album</legend>
+            <label for="title">Song Title</label>
+            <input type="text" name="title">
+            <label for="length">Length in Seconds </label>
+            <input type="number" name="length">
+            <label for="trackNumber">Track Number</label>
+            <input type="number" name="trackNumber">
+            <input type="hidden" name="albumTitle" th:value="${album.title}">
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+</ul>
+</body>
 </html>
