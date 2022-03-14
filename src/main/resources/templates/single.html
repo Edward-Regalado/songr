@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Album</title>
+</head>
+<body>
+<header>
+    <h1>Single Album</h1>
+</header>
+<main>
+    <h2 th:text="${album.title}"></h2>
+    <h2 th:text="${album.artist}"></h2>
+    <img th:src="${album.imageUrl}"  alt="image">
+    <p th:text="${album.songCount}"></p>
+    <p th:text="${album.lengthInS}"></p>
+    <h3>Songs</h3>
+    <ul th:each="song : ${album.songsInThisAlbum}">
+        <li th:text="'Song: ' + ${song.title}"></li>
+        <li th:text="'Track: ' + ${song.trackNumber}"></li>
+        <li th:text="'Length: ' + ${song.length}"></li>
+    </ul>
+</main>
+<footer>
+    <h2>Footer</h2>
+</footer>
+</body>
+</html>
